@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <h2>The the shares, that currently are in your property (user ID: {{ USER_ID }})</h2><br>
+
+    <!-- creating the table -->
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <!-- symbol -->
+                <th scope="col">Share symbol</th>
+                <!-- name -->
+                <th scope="col">Share name</th>
+                <!-- price -->
+                <th scope="col">Share price</th>
+                <!-- shares -->
+                <th scope="col">Number of shares</th>
+                <!-- cost -->
+                <th scope="col">Share cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range( rows2|length ) %}
+                <tr>
+                    <th scope="row">{{ rows2[i]["symbol"] }}</th>
+                    <th>{{ rows2[i]["name"] }}</th>
+                    <th>{{ rows2[i]["price"] }}</th>
+                    <th>{{ rows2[i]["shares"] }}</th>
+                    <th>{{ rows2[i]["cost"] }}</th>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th scope="row"></th>
+                <th></th>
+                <th></th>
+                <th>Cash</th>
+                <th>{{ CASH }}</th>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <th></th>
+                <th></th>
+                <th>TOTAL</th>
+                <th>{{ sum_cost }}</th>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

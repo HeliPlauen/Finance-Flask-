@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quoted
+{% endblock %}
+
+{% block main %}
+    <p scope="row">A share of {{ share_company["name"] }} ( {{ share_company["symbol"] }} ) cost {{ share_company["price"] | usd }}</p>
+{% endblock %}

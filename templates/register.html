@@ -1,0 +1,122 @@
+с{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register" id="form" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="username" id="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" id="password" placeholder="Password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="confirmation" id="confirmation" placeholder="Confirmation" type="password">
+        </div>
+        <button class="btn btn-primary" id="submit" type="submit">Register</button>
+    </form><br><br>
+
+    <script>
+
+        // if form was clicked
+        document.querySelector("form").onsubmit = function()  {
+            prevent();
+
+            // if the username was not inputed
+            var name = document.getElementById("username").value;
+            if (!name)  {
+                alert("You have not inputed the username");
+                return false;
+            }
+
+            // if the password was not inputed
+            if (!document.getElementById("password").value)  {
+                alert("You have not inputed the password");
+                return false;
+            }
+
+            // if the password was not confirmed
+            else if (document.getElementById("password").value != document.getElementById("confirmation").value)  {
+                alert("The password was not confirmed");
+                return false;
+            }
+
+            // if the password is invalid
+            else if (!Valid(document.getElementById("password").value))  {
+                alert("The password may to contain large letters (A-Z), small letters (a-z), numbers (0-9) or the next symbols: @, #, $, %, &. It has to contain at least one sumbol of each type");
+                return false;
+            }
+
+            // cleaning the string
+            checking();
+        };
+
+
+
+        // creating the password-validation function
+        function Valid(s)  {
+            let iA = 0;
+            let ia = 0;
+            let iNum = 0;
+            let iSym = 0;
+            for (let i = 0, n = s.length; i < n; i ++)  {
+                if (s[i] >= 'A' && s[i] <= 'Z')  {
+                    iA ++;
+                }
+                else if (s[i] >= 'a' && s[i] <= 'z')  {
+                    ia ++;
+                }
+                else if (s[i] >= '0' && s[i] <= '9')  {
+                    iNum ++;
+                }
+                else if (s[i] == '@' || s[i] == '#' || s[i] == '$' || s[i] == '%' || s[i] == '&')  {
+                    iSym ++;
+                }
+                else  {
+                    return false;
+                }
+            }
+            if (iA == 0 || ia == 0 || iNum == 0 || iSym == 0)  {
+                return false;
+            }
+            else  {
+                return true;
+            }
+        }
+
+
+
+        // the function? checking - if the username exists aA2@
+        function checking()  {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "/check?username=" + document.getElementById('username').value, true);
+            xhttp.send();
+            xhttp.onreadystatechange = function()  {
+                if (this.readyState == 4 && this.status == 200)  {
+                    var answer0 = xhttp.responseText;
+                    var answer = JSON.parse(answer0);
+                    if (answer == false)  {
+                        alert('THE USERNAME ALREADY EXISTS!!!!');
+                    }
+                    else  {
+                        alert("Submited!!!");
+                        document.getElementById("form").requestSubmit("submit");
+                    }
+                }
+            }
+        }
+
+
+        // stop sending the form
+        function prevent()  {
+            document.getElementById("form").addEventListener("submit", function(event)  {
+                event.preventDefault();
+            });
+        }
+
+    </script>
+
+{% endblock %}
+
