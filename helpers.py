@@ -39,7 +39,7 @@ def lookup(symbol):
 
     # Contact API
     try:
-        response = requests.get(f"https://cloud.iexapis.com/stable/stock/{urllib.parse.quote_plus(symbol)}/quote?token=pk_d06d3892418b44f1bfbdc75afcb0bca5")
+        response = requests.get(f"https://cloud.iexapis.com/stable/stock/{urllib.parse.quote_plus(symbol)}/quote?token=pk_49c2533ddec74d4e89a79a9fce103bc2")
         response.raise_for_status()
     except requests.RequestException:
         return None
